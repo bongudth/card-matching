@@ -3,9 +3,7 @@
     <div v-if="visible" class="card-face is-front">
       {{ value }} - {{ matched }}
     </div>
-    <div v-else class="card-face is-back">
-      Back
-    </div>
+    <div v-else class="card-face is-back">Back</div>
   </div>
 </template>
 
@@ -15,34 +13,34 @@ export default {
   props: {
     matched: {
       type: Boolean,
-      default: false
+      default: false,
     },
     position: {
       type: Number,
-      required: true
+      required: true,
     },
     value: {
       type: Number,
-      required: true
+      required: true,
     },
     visible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props, context) {
     const selectCard = () => {
-      context.emit('select-card', {
+      context.emit("select-card", {
         position: props.position,
-        faceValue: props.value
-      })
-    }
+        faceValue: props.value,
+      });
+    };
 
     return {
-      selectCard
-    }
-  }
-}
+      selectCard,
+    };
+  },
+};
 </script>
 
 <style lang="css" scoped>
@@ -56,7 +54,7 @@ export default {
   height: 100%;
   position: absolute;
 }
-  
+
 .card-face.is-front {
   background-color: red;
   color: white;
