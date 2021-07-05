@@ -1,8 +1,8 @@
 <template>
-  <h1>Peek-a-Vue</h1>
+  <h1>Anime Card Matching Game</h1>
   <section class="description">
-    <p>Welcome to Peek-a-Vue!</p>
-    <p>A card matching game powered by Vue.js 3!</p>
+    <p>Welcome to Kimetsu No Yaiba Game!</p>
+    <p>A card matching game built by bongudth!</p>
   </section>
   <transition-group tag="section" class="game-board" name="shuffle-card">
     <Card
@@ -34,13 +34,13 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
-    const newPlayer = ref(true)
+    const newPlayer = ref(true);
 
     const startGame = () => {
       newPlayer.value = false;
 
       restartGame();
-    }
+    };
 
     const status = computed(() => {
       if (remainingPairs.value === 0) {
@@ -151,7 +151,7 @@ export default {
       status,
       restartGame,
       startGame,
-      newPlayer
+      newPlayer,
     };
   },
 };
@@ -159,7 +159,7 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Crimson Text", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -176,7 +176,7 @@ button {
 }
 
 h1 {
-  padding: 30px 0 10px 0;
+  padding: 20px 0 10px 0;
 }
 
 h2 {
@@ -188,7 +188,7 @@ body {
 }
 
 .description {
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .game-board {
