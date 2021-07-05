@@ -1,14 +1,22 @@
 <template>
-  <div class="card" @click="selectCard">
-    <div v-if="visible" class="card-face is-front">
-      <img :src="`/images/image-${value}.jpg`" :alt="value" class="image-card" />
+  <div class="card" :class="flippedStyles" @click="selectCard">
+    <div class="card-face is-front">
+      <img
+        :src="`/images/image-${value}.jpg`"
+        :alt="value"
+        class="image-card"
+      />
       <img v-if="matched" src="/images/check-mark.svg" class="icon-check" />
     </div>
-    <div v-else class="card-face is-back"><img src="/images/image-back.jpg" /></div>
+    <div class="card-face is-back">
+      <img src="/images/image-back.jpg" />
+    </div>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
+
 export default {
   name: "Card",
   props: {
@@ -30,6 +38,12 @@ export default {
     },
   },
   setup(props, context) {
+    const flippedStyles = computed(() => {
+      if (props.visible) {
+        return "is-flipped";
+      } else return "none";
+    });
+
     const selectCard = () => {
       context.emit("select-card", {
         position: props.position,
@@ -38,6 +52,7 @@ export default {
     };
 
     return {
+      flippedStyles,
       selectCard,
     };
   },
@@ -47,6 +62,12 @@ export default {
 <style lang="css" scoped>
 .card {
   position: relative;
+  transition: 0.5s transform ease-in;
+  transform-style: preserve-3d;
+}
+
+.card.is-flipped {
+  transform: rotateY(180deg);
 }
 
 .card-face {
@@ -55,6 +76,7 @@ export default {
   position: absolute;
   border-radius: 10px;
   cursor: pointer;
+  backface-visibility: hidden;
 }
 
 .card-face.is-front {
@@ -63,6 +85,7 @@ export default {
   object-fit: contain;
   background-image: url(/images/image-1.jpg);
   color: white;
+  transform: rotateY(180deg);
 }
 
 .image-card {
