@@ -1,5 +1,9 @@
 <template>
   <h1>Peek-a-Vue</h1>
+  <section class="description">
+    <p>Welcome to Peek-a-Vue!</p>
+    <p>A card matching game powered by Vue.js 3!</p>
+  </section>
   <transition-group tag="section" class="game-board" name="shuffle-card">
     <Card
       v-for="card in cardList"
@@ -12,7 +16,8 @@
     />
   </transition-group>
   <h2>{{ status }}</h2>
-  <button @click="restartGame" class="restart">Restart Game</button>
+  <button v-if="newPlayer" @click="startGame" class="button">Start Game</button>
+  <button v-else @click="restartGame" class="button">Restart Game</button>
 </template>
 
 <script>
@@ -29,6 +34,13 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
+    const newPlayer = ref(true)
+
+    const startGame = () => {
+      newPlayer.value = false;
+
+      restartGame();
+    }
 
     const status = computed(() => {
       if (remainingPairs.value === 0) {
@@ -73,7 +85,7 @@ export default {
       cardList.value.push({
         value: item,
         variant: 2,
-        visible: false,
+        visible: true,
         position: null,
         matched: false,
       });
@@ -138,6 +150,8 @@ export default {
       userSelection,
       status,
       restartGame,
+      startGame,
+      newPlayer
     };
   },
 };
@@ -156,20 +170,25 @@ export default {
 
 h1,
 h2,
+p,
 button {
   margin: 0;
 }
 
 h1 {
-  padding: 50px 0 25px 0;
+  padding: 30px 0 10px 0;
 }
 
 h2 {
-  padding: 25px 0 10px 0;
+  padding: 20px 0 10px 0;
 }
 
 body {
   margin: 0;
+}
+
+.description {
+  margin-bottom: 20px;
 }
 
 .game-board {
@@ -185,7 +204,7 @@ body {
   transition: transform 0.8s ease-in;
 }
 
-.restart {
+.button {
   background-color: #ffaba2;
   border: none;
   color: inherit;
@@ -196,11 +215,11 @@ body {
     -3px 4px 0 0 #ffbf87;
 }
 
-.restart:hover {
+.button:hover {
   background-color: #ffda72;
 }
 
-.restart:active {
+.button:active {
   transform: translate(-3px, 4px);
   box-shadow: none;
 }
