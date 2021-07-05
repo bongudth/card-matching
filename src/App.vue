@@ -12,7 +12,7 @@
     />
   </section>
   <h2>{{ status }}</h2>
-  <button @click="restartGame">Restart Game</button>
+  <button @click="restartGame" class="restart">Restart Game</button>
 </template>
 
 <script>
@@ -145,16 +145,52 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #4F143F;
+  background-image: url('/images/image-bg.png');
+  height: 100vh;
+}
+
+h1, h2, button {
+  margin: 0;
+}
+
+h1 {
+  padding: 50px 0 25px 0;
+}
+
+h2 {
+  padding: 25px 0 10px 0;
+}
+
+body {
+  margin: 0;
 }
 
 .game-board {
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px;
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
+  grid-template-columns: repeat(4, 120px);
+  grid-template-rows: repeat(4, 120px);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
   justify-content: center;
+}
+
+.restart {
+  background-color: #FFABA2;
+  border: none;
+  color: inherit;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 1px 0 0 #FFBF87, -1px 2px 0 0 #FFBF87, -2px 3px 0 0 #FFBF87, -3px 4px 0 0 #FFBF87;
+}
+
+.restart:hover {
+  background-color: #FFDA72;
+}
+
+.restart:active {
+  transform: translate(-3px, 4px);
+  box-shadow: none;
 }
 </style>
