@@ -1,16 +1,16 @@
 <template>
   <h1>Peek-a-Vue</h1>
-  <section class="game-board">
+  <transition-group tag="section" class="game-board" name="shuffle-card">
     <Card
-      v-for="(card, index) in cardList"
-      :key="`card-${index}`"
+      v-for="card in cardList"
+      :key="`${card.value}-${card.variant}`"
       :matched="card.matched"
       :value="card.value"
       :visible="card.visible"
       :position="card.position"
       @select-card="flipCard"
     />
-  </section>
+  </transition-group>
   <h2>{{ status }}</h2>
   <button @click="restartGame" class="restart">Restart Game</button>
 </template>
@@ -45,12 +45,8 @@ export default {
       return remainingCards / 2;
     });
 
-    const shuffleCards = () => {
-      cardList.value = _.shuffle(cardList.value);
-    };
-
     const restartGame = () => {
-      shuffleCards();
+      cardList.value = _.shuffle(cardList.value);
 
       cardList.value = cardList.value.map((card, index) => {
         return {
@@ -67,6 +63,7 @@ export default {
     cardItems.forEach((item) => {
       cardList.value.push({
         value: item,
+        variant: 1,
         visible: false,
         position: null,
         matched: false,
@@ -74,6 +71,7 @@ export default {
 
       cardList.value.push({
         value: item,
+        variant: 2,
         visible: false,
         position: null,
         matched: false,
@@ -132,7 +130,6 @@ export default {
       flipCard,
       userSelection,
       status,
-      shuffleCards,
       restartGame,
     };
   },
@@ -145,12 +142,14 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #4F143F;
-  background-image: url('/images/image-bg.png');
+  color: #4f143f;
+  background-image: url("/images/image-bg.png");
   height: 100vh;
 }
 
-h1, h2, button {
+h1,
+h2,
+button {
   margin: 0;
 }
 
@@ -175,18 +174,23 @@ body {
   justify-content: center;
 }
 
+.shuffle-card-move {
+  transition: transform 0.8s ease-in;
+}
+
 .restart {
-  background-color: #FFABA2;
+  background-color: #ffaba2;
   border: none;
   color: inherit;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0 1px 0 0 #FFBF87, -1px 2px 0 0 #FFBF87, -2px 3px 0 0 #FFBF87, -3px 4px 0 0 #FFBF87;
+  box-shadow: 0 1px 0 0 #ffbf87, -1px 2px 0 0 #ffbf87, -2px 3px 0 0 #ffbf87,
+    -3px 4px 0 0 #ffbf87;
 }
 
 .restart:hover {
-  background-color: #FFDA72;
+  background-color: #ffda72;
 }
 
 .restart:active {
